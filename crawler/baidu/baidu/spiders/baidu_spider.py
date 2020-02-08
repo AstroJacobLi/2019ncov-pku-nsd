@@ -47,7 +47,8 @@ class BaiduNews(scrapy.Spider):
             item['author'] = author_time[0].strip()
             item['time'] = parse_time(author_time[1].strip())
             if len(news.css('div.c-summary div.c-span18')) == 0: 
-                item['abstract'] = "".join(news.css('div.c-summary::text').getall()).strip()
+                item['abstract'] = "".join(news.css('div.c-summary::text').getall()).strip().replace('\xa0', '')
+                
             else:
                 abs_str = "".join(news.css('div.c-summary div.c-span18 ::text').getall()[3:]).split('...')
                 item['abstract'] = abs_str[0].strip() + '...'
