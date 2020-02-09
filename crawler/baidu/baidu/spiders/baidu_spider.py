@@ -67,3 +67,35 @@ class BaiduNews(scrapy.Spider):
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
             
+
+# spider class
+class LocalGovSpider(scrapy.Spider):
+    name = 'local_gov_spider'
+    def __init__(self, url):
+        self.start_urls = [url]
+        super().__init__()
+
+    custom_settings = {
+        'LOG_LEVEL': logging.DEBUG,
+        'USER_AGENT': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
+    }
+    
+    def parse(self, response):
+        text = "\n".join(response.css("div.TRS_Editor ::text").getall())
+        print(text)
+
+class CentralGovSpider(scrapy.Spider):
+    name = 'central_gov_spider'
+    def __init__(self, url):
+        self.start_urls = [url]
+        super().__init__()
+
+    custom_settings = {
+        'LOG_LEVEL': logging.DEBUG,
+        'USER_AGENT': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
+    }
+    
+    def parse(self, response):
+        text = "\n".join(response.css("div.article ::text").getall())
+        print(text)
+        
