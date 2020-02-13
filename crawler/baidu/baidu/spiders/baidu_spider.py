@@ -61,7 +61,8 @@ class BaiduNews(scrapy.Spider):
 
             #if item['time'] 
             #pd.to_datetime('2018年12月15日'.replace("年", "").replace("月", "").replace("日", "").strip())
-            yield item
+            if item['time'] > pd.to_datetime('2020-02-08 22:00:00'):
+                yield item
         
         next_page =  response.css("p#page a::attr(href)")[-1].get()
         if next_page is not None:
